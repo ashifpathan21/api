@@ -66,19 +66,19 @@ const otpTemplate = (otp) => {
 	
 	<body>
 		<div class="container">
-			<a href="https://studynotion-edtech-project.vercel.app"><img class="logo"
-					src="https://i.ibb.co/7Xyj3PC/logo.png" alt="StudyNotion Logo"></a>
+			<a href="https://z3bl8gxd-5173.inc1.devtunnels.ms/"><img class="logo"
+					src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1egew5suQlAcB6W95du1lDMC8_7PqV3hnaQ&s" alt="ACE OF SPADES"></a>
 			<div class="message">OTP Verification Email</div>
 			<div class="body">
 				<p>Dear User,</p>
-				<p>Thank you for registering with StudyNotion. To complete your registration, please use the following OTP
+				<p>Thank you for registering with Ace of Spades. To complete your registration, please use the following OTP
 					(One-Time Password) to verify your account:</p>
 				<h2 class="highlight">${otp}</h2>
 				<p>This OTP is valid for 5 minutes. If you did not request this verification, please disregard this email.
 				Once your account is verified, you will have access to our platform and its features.</p>
 			</div>
 			<div class="support">If you have any questions or need assistance, please feel free to reach out to us at <a
-					href="mailto:info@studynotion.com">info@studynotion.com</a>. We are here to help!</div>
+					href="mailto:info@aceofspades.com">info@aceofspades.com</a>. We are here to help!</div>
 		</div>
 	</body>
 	

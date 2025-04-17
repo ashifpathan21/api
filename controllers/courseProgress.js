@@ -5,7 +5,7 @@ const CourseProgress = require("../models/CouresProgress")
 const Course = require("../models/Course")
 
 exports.updateCourseProgress = async (req, res) => {
-  const { courseId, subsectionId } = req.body
+  const { courseId, subsectionId , correctQuestions } = req.body
   const userId = req.user.id
 
   try {
@@ -21,6 +21,7 @@ exports.updateCourseProgress = async (req, res) => {
       userId: userId,
     })
 
+
     if (!courseProgress) {
       // If course progress doesn't exist, create a new one
       return res.status(404).json({
@@ -33,8 +34,12 @@ exports.updateCourseProgress = async (req, res) => {
         return res.status(400).json({ error: "Subsection already completed" })
       }
 
-      // Push the subsection into the completedVideos array
-      courseProgress.completedVideos.push(subsectionId)
+      // Push the subsection and correctQuestions into the completedVideos array
+      courseProgress.completedVideos.push({
+        subSection: subsectionId,
+        correctQuestions: correctQuestions || [],
+      });
+     
     }
 
     // Save the updated course progress
@@ -42,10 +47,11 @@ exports.updateCourseProgress = async (req, res) => {
 
     return res.status(200).json({ message: "Course progress updated" })
   } catch (error) {
-    console.error(error)
+    //console.error(error)
     return res.status(500).json({ error: "Internal server error" })
   }
 }
+
 
 // exports.getProgressPercentage = async (req, res) => {
 //   const { courseId } = req.body
@@ -74,7 +80,7 @@ exports.updateCourseProgress = async (req, res) => {
 //         .status(400)
 //         .json({ error: "Can not find Course Progress with these IDs." })
 //     }
-//     console.log(courseProgress, userId)
+//     //console.log(courseProgress, userId)
 //     let lectures = 0
 //     courseProgress.courseID.courseContent?.forEach((sec) => {
 //       lectures += sec.subSection.length || 0
@@ -93,7 +99,7 @@ exports.updateCourseProgress = async (req, res) => {
       // message: "Succesfully fetched Course progress",
 //     })
 //   } catch (error) {
-//     console.error(error)
+//     //console.error(error)
 //     return res.status(500).json({ error: "Internal server error" })
 //   }
 // }

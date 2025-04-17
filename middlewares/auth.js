@@ -7,25 +7,30 @@ dotenv.config();
 
 // This function is used as middleware to authenticate user requests
 exports.auth = async (req, res, next) => {
+
 	try {
 		// Extracting JWT from request cookies, body or header
 		const token =
 			req.cookies.token ||
 			req.body.token ||
-			req.header("Authorization").replace("Bearer ", "");
+			req.headers.authorization?.split(" ")[1]; // ✅ Bearer हटाने के लिए
 
+                 
 		// If JWT is missing, return 401 Unauthorized response
+
 		if (!token) {
 			return res.status(401).json({ success: false, message: `Token Missing` });
 		}
 
-		try {
+		//console.log(token)
+		try{
 			// Verifying the JWT using the secret key stored in environment variables
 			const decode = await jwt.verify(token, process.env.JWT_SECRET);
-			console.log(decode);
 			// Storing the decoded JWT payload in the request object for further use
+			//console.log('decoded................' , decode)
 			req.user = decode;
-		} catch (error) {
+			//console.log('reqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq..............................',  req.user)
+		}catch(error){
 			// If JWT verification fails, return 401 Unauthorized response
 			return res
 				.status(401)
@@ -79,9 +84,9 @@ exports.isAdmin = async (req, res, next) => {
 exports.isInstructor = async (req, res, next) => {
 	try {
 		const userDetails = await User.findOne({ email: req.user.email });
-		console.log(userDetails);
+		//console.log(userDetails);
 
-		console.log(userDetails.accountType);
+		//console.log(userDetails.accountType);
 
 		if (userDetails.accountType !== "Instructor") {
 			return res.status(401).json({

@@ -11,10 +11,18 @@ const courseProgress = new mongoose.Schema({
   },
   completedVideos: [
     {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "SubSection",
+      subSection: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "SubSection",
+      },
+      correctQuestions: [
+        {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Question",
+        },
+      ],
     },
   ],
 })
 
-module.exports = mongoose.model("CourseProgress", courseProgress)
+module.exports = mongoose.model("courseProgress", courseProgress)

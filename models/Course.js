@@ -30,10 +30,6 @@ const coursesSchema = new mongoose.Schema({
 	thumbnail: {
 		type: String,
 	},
-	tag: {
-		type: [String],
-		required: true,
-	},
 	category: {
 		type: mongoose.Schema.Types.ObjectId,
 		// required: true,

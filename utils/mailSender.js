@@ -1,5 +1,6 @@
 const nodemailer = require("nodemailer");
-
+require('dotenv').config()
+//working
 const mailSender = async (email, title, body) => {
     try{
             let transporter = nodemailer.createTransport({
@@ -9,21 +10,21 @@ const mailSender = async (email, title, body) => {
                     pass: process.env.MAIL_PASS,
                 }
             })
-
-
+            //console.log('sending otp')
             let info = await transporter.sendMail({
-                from: 'StudyNotion || CodeHelp - by Babbar',
+                from: 'ACE OF SPADES',
                 to:`${email}`,
                 subject: `${title}`,
                 html: `${body}`,
             })
-            console.log(info);
+            //console.log(info);
             return info;
     }
     catch(error) {
-        console.log(error.message);
+        //console.log(error.message);
     }
 }
 
 
+ 
 module.exports = mailSender;

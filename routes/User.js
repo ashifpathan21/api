@@ -1,14 +1,23 @@
 // Import the required modules
 const express = require("express")
-const router = express.Router()
+const router = express.Router() ;
 
 // Import the required controllers and middleware functions
 const {
   login,
   signup,
   sendotp,
+  checkUsernameAvailability,
   changePassword,
+  getUserDetailsByUserId,
+  addFriend
 } = require("../controllers/Auth")
+
+//for ai 
+const {
+  getReview
+} = require('../controllers/ai.controllers.js')
+
 const {
   resetPasswordToken,
   resetPassword,
@@ -24,6 +33,17 @@ const { auth } = require("../middlewares/auth")
 
 // Route for user login
 router.post("/login", login)
+
+router.post('/support' , getReview) ;
+
+//to check availability of user 
+router.post('/username' , checkUsernameAvailability)
+
+//to get the user by userName ;
+router.post('/find-friend' ,  auth , getUserDetailsByUserId) ;
+
+//send friend request 
+router.post('/add-friend' ,  auth , addFriend) ;
 
 // Route for user signup
 router.post("/signup", signup)
