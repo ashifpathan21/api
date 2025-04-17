@@ -9,5 +9,5 @@ const { initializeSocket } = require('./socket');  // adjust path accordingly
 initializeSocket(server);
 
 server.listen(PORT, () => {
-    //console.log(`server is runnig on port ${PORT}`);
+    console.log(`server is runnig on port ${PORT}`);
 });

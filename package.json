@@ -30,5 +30,8 @@
     "razorpay": "^2.9.6",
     "socket.io": "^4.8.1",
     "yt-dlp-exec": "^1.0.2"
+  },
+  "engines": {
+    "node": "18.x"
   }
 }
