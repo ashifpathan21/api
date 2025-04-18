@@ -23,7 +23,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
 	cors({
-		origin:"https://ace-of-spades.onrender.com",
+		origin: ["https://ace-of-spades.onrender.com", "http://localhost:5173"],
 		credentials:true,
 	})
 )
