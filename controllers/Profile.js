@@ -112,6 +112,7 @@ exports.getAllUserDetails = async (req, res) => {
    
     const userDetails = await User.findById(id)
       .populate("additionalDetails")
+      .populate('friendRequest')
       .populate({
         path:'courses' ,
         populate:{
