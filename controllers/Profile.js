@@ -112,7 +112,10 @@ exports.getAllUserDetails = async (req, res) => {
    
     const userDetails = await User.findById(id)
       .populate("additionalDetails")
-      .populate('friendRequest')
+       .populate({
+    path: 'friendRequest',
+    select: '-password' // Exclude password
+  })
       .populate({
         path:'courses' ,
         populate:{
@@ -131,6 +134,8 @@ exports.getAllUserDetails = async (req, res) => {
       
       .exec()
     //console.log(userDetails)
+
+    
     res.status(200).json({
       success: true,
       message: "User Data fetched successfully",
