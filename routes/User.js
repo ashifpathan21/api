@@ -47,9 +47,9 @@ router.post('/find-friend' ,  auth , getUserDetailsByUserId) ;
 //send friend request 
 router.post('/add-friend' ,  auth , addFriend) ;
 //accept friend request 
-router.post('/add-friend' ,  auth , acceptFriendRequest) ;
+router.post('/accept-friend-request' ,  auth , acceptFriendRequest) ;
 //reject friend request 
-router.post('/add-friend' ,  auth , rejectFriendRequest) ;
+router.post('/reject-friend-request' ,  auth , rejectFriendRequest) ;
 
 // Route for user signup
 router.post("/signup", signup)
