@@ -433,3 +433,76 @@ exports.addFriend = async (req , res) => {
     //console.log(error.message)
   }
 }
+
+
+
+exports.acceptFriendRequest = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const { requesterId } = req.body;
+
+    const user = await User.findById(userId);
+    const requester = await User.findById(requesterId);
+
+    if (!user || !requester) {
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
+
+    // Check if request exists
+    if (!user.friendRequest.includes(requesterId)) {
+      return res.status(400).json({ success: false, message: "No request found" });
+    }
+
+    // Remove from friendRequest
+    user.friendRequest = user.friendRequest.filter(
+      (id) => id.toString() !== requesterId
+    );
+
+    // Add to friends list for both users
+    user.friends.push(requesterId);
+    requester.friends.push(userId);
+
+    await user.save();
+    await requester.save();
+
+    return res.status(200).json({
+      success: true,
+      message: "Friend request accepted",
+    });
+  } catch (err) {
+    return res.status(500).json({ success: false, message: "Server error" });
+  }
+};
+
+
+exports.rejectFriendRequest = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const { requesterId } = req.body;
+
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
+
+    // Check if request exists
+    if (!user.friendRequest.includes(requesterId)) {
+      return res.status(400).json({ success: false, message: "No request found" });
+    }
+
+    // Remove from friendRequest
+    user.friendRequest = user.friendRequest.filter(
+      (id) => id.toString() !== requesterId
+    );
+
+    await user.save();
+
+    return res.status(200).json({
+      success: true,
+      message: "Friend request rejected",
+    });
+  } catch (err) {
+    return res.status(500).json({ success: false, message: "Server error" });
+  }
+};
