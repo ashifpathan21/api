@@ -10,7 +10,9 @@ const {
   checkUsernameAvailability,
   changePassword,
   getUserDetailsByUserId,
-  addFriend
+  addFriend ,
+  rejectFriendRequest  ,
+  acceptFriendRequest 
 } = require("../controllers/Auth")
 
 //for ai 
@@ -44,6 +46,10 @@ router.post('/find-friend' ,  auth , getUserDetailsByUserId) ;
 
 //send friend request 
 router.post('/add-friend' ,  auth , addFriend) ;
+//accept friend request 
+router.post('/add-friend' ,  auth , acceptFriendRequest) ;
+//reject friend request 
+router.post('/add-friend' ,  auth , rejectFriendRequest) ;
 
 // Route for user signup
 router.post("/signup", signup)
