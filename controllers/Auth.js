@@ -358,11 +358,11 @@ exports.getUserDetailsByUserId = async (req , res ) => {
       })
       .sort({ createdAt: -1 }) // Sort by creation date in descending order
       .limit(7) // Limit the results to 5-7 users
-      .select("firstName userName friendRequest lastName additionalDetails image") // Select specific fields
-      .populate({
-      path: "additionalDetails",
-      select: "collegeName courses courseProgress friends", // Populate additional details
-      });
+      .select("firstName userName additionalDetails  courseProgress courses friendRequest friends lastName  image") // Select specific fields
+      .populate("courseProgress")
+      .poplulate({
+        path:'additionalDetails',
+        select:'about linkedinUrl '})
 
     if (!userDetails || userDetails.length === 0) {
       return res.status(404).json({
