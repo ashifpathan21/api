@@ -362,7 +362,7 @@ exports.getUserDetailsByUserId = async (req , res ) => {
       .populate("courseProgress")
       .populate({
         path:'additionalDetails',
-        select:'about linkedinUrl '})
+        select:'about linkedinUrl '}).exec()
 
     if (!userDetails || userDetails.length === 0) {
       return res.status(404).json({
