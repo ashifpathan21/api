@@ -360,7 +360,7 @@ exports.getUserDetailsByUserId = async (req , res ) => {
       .limit(7) // Limit the results to 5-7 users
       .select("firstName userName additionalDetails  courseProgress courses friendRequest friends lastName  image") // Select specific fields
       .populate("courseProgress")
-      .poplulate({
+      .populate({
         path:'additionalDetails',
         select:'about linkedinUrl '})
 
