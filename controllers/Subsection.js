@@ -3,6 +3,39 @@ const Section = require("../models/Section")
 const SubSection = require("../models/SubSection")
 const { uploadImageToCloudinary } = require("../utils/imageUpload")
 const ytdlp = require("yt-dlp-exec");
+const axios = require("axios");
+require('dotenv').config() 
+
+
+async function getYouTubeDuration(videoUrl) {
+  try {
+    const videoId = extractVideoId(videoUrl);
+    const apiKey = process.env.YOU_TUBE;
+
+    const url = `https://www.googleapis.com/youtube/v3/videos?part=contentDetails&id=${videoId}&key=${apiKey}`;
+    const res = await axios.get(url);
+
+    const isoDuration = res.data.items[0].contentDetails.duration;
+    const seconds = convertISOToSeconds(isoDuration);
+    return seconds;
+  } catch (err) {
+    console.error("Failed to fetch YouTube video duration:", err.message);
+    return null;
+  }
+}
+
+// Extract Video ID from YouTube URL
+function extractVideoId(url) {
+  const match = url.match(/(?:v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
+  return match ? match[1] : null;
+}
+
+// Convert ISO 8601 Duration to seconds
+function convertISOToSeconds(duration) {
+  const regex = /PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/;
+  const [, hours = 0, minutes = 0, seconds = 0] = duration.match(regex).map(Number);
+  return hours * 3600 + minutes * 60 + seconds;
+}
 
 // Create a new sub-section for a given section
 exports.createSubSection = async (req, res) => {
@@ -27,19 +60,10 @@ exports.createSubSection = async (req, res) => {
     // )
 
     
-//get duration 
-  async function getDuration(videoUrl) {
-  try {
-    const info = await ytdlp(videoUrl, { dumpSingleJson: true });
-    console.log(info)
-    return info.duration;
-  } catch (error) {
-    console.log("Failed to fetch video duration");
-  }
-}
+
 
     
-       const details = await   getDuration(videoUrl);
+       const details = await getYouTubeDuration(videoUrl);
     
        console.log(details)
 
@@ -99,14 +123,9 @@ exports.updateSubSection = async (req, res) => {
     //   )
       subSection.videoUrl = videoUrl 
 
-      async function getDuration(videoUrl) {
-        const info = await ytdlp(videoUrl, { dumpSingleJson: true });
-       
-        //console.log(`Duration: ${info.duration} seconds`);
-        return info.duration
-    }
+   
     
-       const details = await   getDuration(videoUrl);
+       const details = await getYouTubeDuration(videoUrl);
     
 
 
