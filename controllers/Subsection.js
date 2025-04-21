@@ -17,8 +17,7 @@ async function getYouTubeDuration(videoUrl) {
 
     const isoDuration = res.data.items[0].contentDetails.duration;
     const seconds = convertISOToSeconds(isoDuration);
-    console.log("ISO Duration:", isoDuration);  // check this
-    console.log("Parsed seconds:", seconds);
+   
 
     return seconds;
   } catch (err) {
@@ -55,7 +54,7 @@ exports.createSubSection = async (req, res) => {
     // Extract necessary information from the request body
     const { sectionId, title, description , videoUrl } = req.body
     // const video = req.files.video
-      console.log( sectionId, title, description , videoUrl ) ;
+      //console.log( sectionId, title, description , videoUrl ) ;
     // Check if all necessary fields are provided
     if (!sectionId || !title || !description  ) {
       return res
@@ -76,7 +75,7 @@ exports.createSubSection = async (req, res) => {
     
        const details = await getYouTubeDuration(videoUrl);
     
-       console.log(details)
+      // console.log(details)
 
     // //console.log(uploadDetails)
     // Create a new sub-section with the necessary information
