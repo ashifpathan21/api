@@ -6,11 +6,12 @@ const ytdlp = require("yt-dlp-exec");
 
 // Create a new sub-section for a given section
 exports.createSubSection = async (req, res) => {
+  console.log('call traced ') ;
   try {
     // Extract necessary information from the request body
     const { sectionId, title, description , videoUrl } = req.body
     // const video = req.files.video
-
+      console.log( sectionId, title, description , videoUrl ) ;
     // Check if all necessary fields are provided
     if (!sectionId || !title || !description  ) {
       return res
