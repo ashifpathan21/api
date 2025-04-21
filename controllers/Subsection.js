@@ -17,6 +17,9 @@ async function getYouTubeDuration(videoUrl) {
 
     const isoDuration = res.data.items[0].contentDetails.duration;
     const seconds = convertISOToSeconds(isoDuration);
+    console.log("ISO Duration:", isoDuration);  // check this
+    console.log("Parsed seconds:", seconds);
+
     return seconds;
   } catch (err) {
     console.error("Failed to fetch YouTube video duration:", err.message);
@@ -31,11 +34,19 @@ function extractVideoId(url) {
 }
 
 // Convert ISO 8601 Duration to seconds
-function convertISOToSeconds(duration) {
+function convertISOToSeconds(isoDuration) {
   const regex = /PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/;
-  const [, hours = 0, minutes = 0, seconds = 0] = duration.match(regex).map(Number);
+  const match = isoDuration.match(regex);
+
+  if (!match) return 0; // fallback
+
+  const hours = parseInt(match[1] || 0);
+  const minutes = parseInt(match[2] || 0);
+  const seconds = parseInt(match[3] || 0);
+
   return hours * 3600 + minutes * 60 + seconds;
 }
+
 
 // Create a new sub-section for a given section
 exports.createSubSection = async (req, res) => {
