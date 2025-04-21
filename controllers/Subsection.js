@@ -27,12 +27,16 @@ exports.createSubSection = async (req, res) => {
 
     
 //get duration 
-    async function getDuration(videoUrl) {
-        const info = await ytdlp(videoUrl, { dumpSingleJson: true });
-       
-        //console.log(`Duration: ${info.duration} seconds`);
-        return info.duration
-    }
+  async function getDuration(videoUrl) {
+  try {
+    const info = await ytdlp(videoUrl, { dumpSingleJson: true });
+    console.log(info)
+    return info.duration;
+  } catch (error) {
+    throw new Error("Failed to fetch video duration");
+  }
+}
+
     
        const details = await   getDuration(videoUrl);
     
