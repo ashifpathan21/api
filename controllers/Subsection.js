@@ -34,14 +34,14 @@ exports.createSubSection = async (req, res) => {
     console.log(info)
     return info.duration;
   } catch (error) {
-    throw new Error("Failed to fetch video duration");
+    console.log("Failed to fetch video duration");
   }
 }
 
     
        const details = await   getDuration(videoUrl);
     
-       //console.log(details)
+       console.log(details)
 
     // //console.log(uploadDetails)
     // Create a new sub-section with the necessary information
