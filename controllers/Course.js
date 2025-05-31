@@ -196,7 +196,20 @@ exports.getAllCourses = async (req, res) => {
       },
     })
     .populate("category")
-    .populate("ratingAndReviews")
+   .populate({
+        path: "ratingAndReviews",
+        options: { sort: { rating: -1 } }, // sorting inside populate
+        populate: [
+            {
+                path: "user",
+                select: "firstName lastName email image",
+            },
+            {
+                path: "course",
+                select: "courseName",
+            },
+        ],
+    })
     .populate({
       path: "courseContent",
       populate: {
