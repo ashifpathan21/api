@@ -1,6 +1,6 @@
 // 📁 socket.js
 const socketIo = require('socket.io');
-const User = require('./models/user');
+const User = require('./models/User');
 
 let io;
 

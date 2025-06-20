@@ -10,5 +10,5 @@ const { initializeSocket } = require('./socket');  // Import your socket logic â
 initializeSocket(server); // Initialize socket on the same server âœ…
 
 server.listen(PORT, () => {
-  // console.log(`server is running on port ${PORT}`);
+  console.log(`server is running on port ${PORT}`);
 });
