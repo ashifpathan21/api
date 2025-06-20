@@ -61,7 +61,7 @@ exports.updateProfile = async (req, res) => {
       updatedUserDetails,
     })
   } catch (error) {
-    //console.log(error)
+    //// console.log(error)
     return res.status(500).json({
       success: false,
       error: error.message,
@@ -72,7 +72,7 @@ exports.updateProfile = async (req, res) => {
 exports.deleteAccount = async (req, res) => {
   try {
     const id = req.user.id
-    //console.log(id)
+    //// console.log(id)
     const user = await User.findById({ _id: id })
     if (!user) {
       return res.status(404).json({
@@ -99,7 +99,7 @@ exports.deleteAccount = async (req, res) => {
     })
     await CourseProgress.deleteMany({ userId: id })
   } catch (error) {
-    //console.log(error)
+    //// console.log(error)
     res
       .status(500)
       .json({ success: false, message: "User Cannot be deleted successfully" })
@@ -108,46 +108,62 @@ exports.deleteAccount = async (req, res) => {
 
 exports.getAllUserDetails = async (req, res) => {
   try {
-    const id = req.user.id ;
-   
+    const id = req.user.id;
+
     const userDetails = await User.findById(id)
       .populate("additionalDetails")
-       .populate({
-    path: 'friendRequest',
-    select: '-password' // Exclude password
-  })
-      .populate({
-        path:'courses' ,
-        populate:{
-          path:"courseContent"
-                }
-      })
-      .populate({
-         path:'courseProgress',
-         populate:{
-          path:'completedVideos',
-          populate:{
-            path:'subSection'
-          }
-         }
-     } )
-      
-      .exec()
-    //console.log(userDetails)
 
-    
+      .populate({
+        path: "friendRequest",
+        select: "-password -createdAt -updatedAt -__v",
+      })
+
+      .populate({
+        path: "friends",
+        populate: [
+          {
+            path: "user",
+            select: "-password -createdAt -updatedAt -__v", // friend user details
+          },
+          {
+            path: "chat", // assuming chat ID is stored
+            select: "-__v", // you can modify this to populate messages too
+          },
+        ],
+      })
+
+      .populate({
+        path: "courses",
+        populate: {
+          path: "courseContent",
+        },
+      })
+
+      .populate({
+        path: "courseProgress",
+        populate: {
+          path: "completedVideos",
+          populate: {
+            path: "subSection",
+          },
+        },
+      })
+
+      .exec();
+
     res.status(200).json({
       success: true,
       message: "User Data fetched successfully",
       data: userDetails,
-    })
+    });
   } catch (error) {
     return res.status(500).json({
       success: false,
       message: error.message,
-    })
+    });
   }
-}
+};
+
 
 exports.updateDisplayPicture=async(req,res) =>{
 
@@ -159,12 +175,12 @@ exports.updateDisplayPicture=async(req,res) =>{
      process.env.FOLDER_NAME,
      1000,1000
     )
-    //console.log(image);
+    //// console.log(image);
     const updatedProfile=await User.findByIdAndUpdate({_id:userId},
  {image:image.secure_url},
  {new:true})
 
- //console.log("yaha pe hai aapki profile",updatedProfile);
+ //// console.log("yaha pe hai aapki profile",updatedProfile);
  res.send({
      success: true,
      message: `Image Updated successfully`,
@@ -269,7 +285,7 @@ exports.instructorDashboard = async (req, res) => {
 
     res.status(200).json({ courses: courseData })
   } catch (error) {
-    //console.error(error)
+    //// console.error(error)
     res.status(500).json({ message: "Server Error" })
   }
 } 
@@ -342,7 +358,7 @@ exports.enrollInCourse = async (req, res) => {
       )
     )
 
-    //console.log("Email sent successfully: ", emailResponse.response)
+    //// console.log("Email sent successfully: ", emailResponse.response)
    
 
     return res.status(200).json({
@@ -350,7 +366,7 @@ exports.enrollInCourse = async (req, res) => {
       message: "User enrolled in course successfully",
     });
   } catch (error) {
-    //console.log(error);
+    //// console.log(error);
     return res.status(500).json({
       success: false,
       message: error.message,

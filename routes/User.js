@@ -10,11 +10,19 @@ const {
   checkUsernameAvailability,
   changePassword,
   getUserDetailsByUserId,
-  addFriend ,
-  rejectFriendRequest  ,
-  acceptFriendRequest 
 } = require("../controllers/Auth")
 
+
+const {
+sendMessage ,
+markMessagesAsSeen
+} = require('../controllers/sendMessage.js')
+
+const {
+   addFriend ,
+  rejectFriendRequest  ,
+  acceptFriendRequest 
+} = require("../controllers/friends")
 //for ai 
 const {
   getReview
@@ -37,6 +45,9 @@ const { auth } = require("../middlewares/auth")
 router.post("/login", login)
 
 router.post('/support' , getReview) ;
+
+router.post('/sendMessage' , auth , sendMessage ) ; 
+router.put('/seenMessage' , auth , markMessagesAsSeen ) ; 
 
 //to check availability of user 
 router.post('/username' , checkUsernameAvailability)
@@ -69,6 +80,8 @@ router.post("/reset-password-token", resetPasswordToken)
 
 // Route for resetting user's password after verification
 router.post("/reset-password", resetPassword)
+
+
 
 // Export the router for use in the main application
 module.exports = router

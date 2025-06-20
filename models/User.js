@@ -26,12 +26,19 @@ const userSchema = new mongoose.Schema(
 			trim: true,
 			unique:true 
 		},
-		friends:[
-		{
-			type: mongoose.Schema.Types.ObjectId,
-			ref: "user",
-		}
-		]
+	friends: [
+  {
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "user"
+    },
+    chat: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "message"
+    }
+  }
+]
+
 ,
 
 		// Define the password field with type String and required
@@ -94,4 +101,9 @@ const userSchema = new mongoose.Schema(
 );
 
 // Export the Mongoose model for the user schema, using the name "user"
-module.exports = mongoose.model("user", userSchema);  
+module.exports = mongoose.models.user || mongoose.model("user", userSchema);
+
+// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InZsb2dzdGhlYXNoQGdtYWlsLmNvbSIsImlkIjoiNjg1M2VmMzAzNjczYmE3ZDY0N2I3ZjNlIiwiaWF0IjoxNzUwMzMxODI4LCJleHAiOjE3NTA0MTgyMjh9.Bqq_2SlRFyKH3F6pd47tfOWFuWrM35smnuCjQdwVlBo
+
+
+// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFzaGlmd29ybGQyMUBnbWFpbC5jb20iLCJpZCI6IjY4NTNmMGUyMzY3M2JhN2Q2NDdiN2ZiMiIsImlhdCI6MTc1MDMzMTg2MywiZXhwIjoxNzUwNDE4MjYzfQ.tQJSZgt5Fgan_uswi40wqyMiquVOtbyuvm-hzdeLkTM

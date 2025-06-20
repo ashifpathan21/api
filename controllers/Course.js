@@ -23,7 +23,7 @@ exports.createCourse = async (req, res) => {
       instructions,
     } = req.body;
 
-    //console.log({ courseName, courseDescription, whatYouWillLearn, price, category, status, thumbnail, instructions });
+    //// console.log({ courseName, courseDescription, whatYouWillLearn, price, category, status, thumbnail, instructions });
 
     if (!courseName || !courseDescription || !whatYouWillLearn || !thumbnail || !category || !instructions) {
       return res.status(400).json({
@@ -88,7 +88,7 @@ exports.createCourse = async (req, res) => {
       message: "Course Created Successfully",
     });
   } catch (error) {
-    //console.error(error);
+    //// console.error(error);
     res.status(500).json({
       success: false,
       message: "Failed to create course",
@@ -111,7 +111,7 @@ exports.editCourse = async (req, res) => {
     const {courseName , courseDescription , whatYouWillLearn , price , status , category , thumbnail , instructions} = updates
 
     if(courseName){
-      //console.log(courseName)
+      //// console.log(courseName)
       course.courseName = courseName ;
     }
     if(courseDescription){
@@ -125,7 +125,7 @@ exports.editCourse = async (req, res) => {
     }
     if(category){
       const categ = await  Category.findOne({name:category});
- //console.log(categ)
+ //// console.log(categ)
       course.category = categ._id ;
     }
  
@@ -146,7 +146,7 @@ exports.editCourse = async (req, res) => {
      
    // }
    course.status = updates.status
-   //console.log(updates.status)
+   //// console.log(updates.status)
 
     await course.save()
 
@@ -175,7 +175,7 @@ exports.editCourse = async (req, res) => {
       data: updatedCourse,
     })
   } catch (error) {
-    //console.error(error)
+    //// console.error(error)
     res.status(500).json({
       success: false,
       message: "Internal server error",
@@ -232,7 +232,7 @@ exports.getAllCourses = async (req, res) => {
       data: allCourses,
     })
   } catch (error) {
-    //console.log(error)
+    //// console.log(error)
     return res.status(404).json({
       success: false,
       message: `Can't Fetch Course Data`,
@@ -262,7 +262,7 @@ exports.getAllCourses = async (req, res) => {
 //         },
 //       })
 //       .exec()
-//     // //console.log(
+//     // //// console.log(
 //     //   "###################################### course details : ",
 //     //   courseDetails,
 //     //   courseId
@@ -388,14 +388,14 @@ exports.getFullCourseDetails = async (req, res) => {
       })
       .exec()
 
-      //console.log(courseDetails)
+      //// console.log(courseDetails)
 
     let courseProgressCount = await CourseProgress.findOne({
       courseID: courseId,
       userId: userId,
     })
 
-    //console.log("courseProgressCount : ", courseProgressCount)
+    //// console.log("courseProgressCount : ", courseProgressCount)
 
     if (!courseDetails) {
       return res.status(400).json({
@@ -421,7 +421,7 @@ exports.getFullCourseDetails = async (req, res) => {
 
     const totalDuration = convertSecondsToDuration(totalDurationInSeconds)
 
-    //console.log('course ................................................................\n', courseDetails)
+    //// console.log('course ................................................................\n', courseDetails)
 
     return res.status(200).json({
       success: true,
@@ -479,7 +479,7 @@ exports.getInstructorCourses = async (req, res) => {
       data: instructorCourses,
     })
   } catch (error) {
-    //console.error(error)
+    //// console.error(error)
     res.status(500).json({
       success: false,
       message: "Failed to retrieve instructor courses",
@@ -491,7 +491,7 @@ exports.getInstructorCourses = async (req, res) => {
 exports.deleteCourse = async (req, res) => {
   try {
     const { courseId } = req.body
-//console.log( 'course  ................................',courseId)
+//// console.log( 'course  ................................',courseId)
     // Find the course
     const course = await Course.findById(courseId)
     if (!course) {
@@ -535,7 +535,7 @@ exports.deleteCourse = async (req, res) => {
       message: "Course deleted successfully",
     })
   } catch (error) {
-    //console.error(error)
+    //// console.error(error)
     return res.status(500).json({
       success: false,
       message: "Server error",
@@ -565,7 +565,7 @@ exports.getTopCourses = async (req, res) => {
       data: topCourses,
     });
   } catch (error) {
-    //console.error(error);
+    //// console.error(error);
     return res.status(500).json({
       success: false,
       message: "Failed to retrieve top courses",
@@ -603,7 +603,7 @@ exports.getTopCourseOfInstructor = async (req, res) => {
       data: topCourse,
     });
   } catch (error) {
-    //console.error(error);
+    //// console.error(error);
     return res.status(500).json({
       success: false,
       message: "Failed to retrieve top course",

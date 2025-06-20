@@ -25,7 +25,7 @@ AI Response: "Sure! What issue are you facing? You can also visit our Help Cente
 // const prompt = "Explain how AI works";
 
 // // const result = await model.generateContent(prompt);
-// //console.log(result.response.text());
+// //// console.log(result.response.text());
 
 
 

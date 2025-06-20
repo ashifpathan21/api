@@ -21,7 +21,7 @@ async function getYouTubeDuration(videoUrl) {
 
     return seconds;
   } catch (err) {
-    console.error("Failed to fetch YouTube video duration:", err.message);
+    // console.error("Failed to fetch YouTube video duration:", err.message);
     return null;
   }
 }
@@ -49,19 +49,19 @@ function convertISOToSeconds(isoDuration) {
 
 // Create a new sub-section for a given section
 exports.createSubSection = async (req, res) => {
-  console.log('call traced ') ;
+  // console.log('call traced ') ;
   try {
     // Extract necessary information from the request body
     const { sectionId, title, description , videoUrl } = req.body
     // const video = req.files.video
-      //console.log( sectionId, title, description , videoUrl ) ;
+      //// console.log( sectionId, title, description , videoUrl ) ;
     // Check if all necessary fields are provided
     if (!sectionId || !title || !description  ) {
       return res
         .status(404)
         .json({ success: false, message: "All Fields are Required" })
     }
-    // //console.log(video)
+    // //// console.log(video)
 
     // // Upload the video file to Cloudinary
     // const uploadDetails = await uploadImageToCloudinary(
@@ -75,9 +75,9 @@ exports.createSubSection = async (req, res) => {
     
        const details = await getYouTubeDuration(videoUrl);
     
-      // console.log(details)
+      // // console.log(details)
 
-    // //console.log(uploadDetails)
+    // //// console.log(uploadDetails)
     // Create a new sub-section with the necessary information
     const SubSectionDetails = await SubSection.create({
       title: title,
@@ -97,7 +97,7 @@ exports.createSubSection = async (req, res) => {
     return res.status(200).json({ success: true, data: updatedSection })
   } catch (error) {
     // Handle any errors that may occur during the process
-    //console.error("Error creating new sub-section:", error)
+    //// console.error("Error creating new sub-section:", error)
     return res.status(500).json({
       success: false,
       message: "Internal server error",
@@ -149,7 +149,7 @@ exports.updateSubSection = async (req, res) => {
       "subSection"
     )
 
-    //console.log("updated section", updatedSection)
+    //// console.log("updated section", updatedSection)
 
     return res.json({
       success: true,
@@ -157,7 +157,7 @@ exports.updateSubSection = async (req, res) => {
       data: updatedSection,
     })
   } catch (error) {
-    //console.error(error)
+    //// console.error(error)
     return res.status(500).json({
       success: false,
       message: "An error occurred while updating the section",
@@ -168,7 +168,7 @@ exports.updateSubSection = async (req, res) => {
 exports.deleteSubSection = async (req, res) => {
   try {
     const { subSectionId, sectionId } = req.body
-    //console.log({ subSectionId, sectionId })
+    //// console.log({ subSectionId, sectionId })
     await Section.findByIdAndUpdate(
       { _id: sectionId },
       {
@@ -197,7 +197,7 @@ exports.deleteSubSection = async (req, res) => {
       data: updatedSection,
     })
   } catch (error) {
-    //console.error(error)
+    //// console.error(error)
     return res.status(500).json({
       success: false,
       message: "An error occurred while deleting the SubSection",

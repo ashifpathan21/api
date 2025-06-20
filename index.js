@@ -14,7 +14,6 @@ const fileUpload = require("express-fileupload");
 const dotenv = require("dotenv");
 
 dotenv.config();
-const PORT = process.env.PORT || 3000;
 
 //database connect
 database.connect();
@@ -46,15 +45,12 @@ app.use("/api/v1/reach", contactUsRoute);
 
 //def route
 
-// app.get("/", (req, res) => {
-// 	return res.json({
-// 		success:true,
-// 		message:'Your server is up and running....'
-// 	});
-// });
+app.get("/", (req, res) => {
+	return res.json({
+		success:true,
+		message:'Your server is up and running....'
+	});
+});
 
-// app.listen(PORT, () => {
-// 	console.log(`App is running at ${PORT}`)
-// })
 
 module.exports = app 

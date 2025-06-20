@@ -47,7 +47,7 @@ exports.updateCourseProgress = async (req, res) => {
 
     return res.status(200).json({ message: "Course progress updated" })
   } catch (error) {
-    //console.error(error)
+    //// console.error(error)
     return res.status(500).json({ error: "Internal server error" })
   }
 }
@@ -80,7 +80,7 @@ exports.updateCourseProgress = async (req, res) => {
 //         .status(400)
 //         .json({ error: "Can not find Course Progress with these IDs." })
 //     }
-//     //console.log(courseProgress, userId)
+//     //// console.log(courseProgress, userId)
 //     let lectures = 0
 //     courseProgress.courseID.courseContent?.forEach((sec) => {
 //       lectures += sec.subSection.length || 0
@@ -99,7 +99,7 @@ exports.updateCourseProgress = async (req, res) => {
       // message: "Succesfully fetched Course progress",
 //     })
 //   } catch (error) {
-//     //console.error(error)
+//     //// console.error(error)
 //     return res.status(500).json({ error: "Internal server error" })
 //   }
 // }

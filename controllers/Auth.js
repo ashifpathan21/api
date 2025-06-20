@@ -108,7 +108,7 @@ exports.signup = async (req, res) => {
       message: "User registered successfully",
     })
   } catch (error) {
-    //console.error(error)
+    //// console.error(error)
     return res.status(500).json({
       success: false,
       message: "User cannot be registered. Please try again.",
@@ -174,7 +174,7 @@ exports.login = async (req, res) => {
       })
     }
   } catch (error) {
-    //console.error(error)
+    //// console.error(error)
     // Return 500 Internal Server Error status code with error message
     return res.status(500).json({
       success: false,
@@ -219,7 +219,7 @@ exports.sendotp = async (req, res) => {
     // Save OTP to the database
     const otpPayload = { email, otp };
     const otpBody = await OTP.create(otpPayload);
-    //console.log("OTP Body", otpBody);
+    //// console.log("OTP Body", otpBody);
 
    
    
@@ -230,7 +230,7 @@ exports.sendotp = async (req, res) => {
       message: `OTP Sent Successfully`,
     });
   } catch (error) {
-    //console.log(error.message);
+    //// console.log(error.message);
     return res.status(500).json({ success: false, error: error.message });
   }
 };
@@ -274,10 +274,10 @@ exports.changePassword = async (req, res) => {
           `Password updated successfully for ${updatedUserDetails.firstName} ${updatedUserDetails.lastName}`
         )
       )
-      //console.log("Email sent successfully:", emailResponse.response)
+      //// console.log("Email sent successfully:", emailResponse.response)
     } catch (error) {
       // If there's an error sending the email, log the error and return a 500 (Internal Server Error) error
-      //console.error("Error occurred while sending email:", error)
+      //// console.error("Error occurred while sending email:", error)
       return res.status(500).json({
         success: false,
         message: "Error occurred while sending email",
@@ -291,7 +291,7 @@ exports.changePassword = async (req, res) => {
       .json({ success: true, message: "Password updated successfully" })
   } catch (error) {
     // If there's an error updating the password, log the error and return a 500 (Internal Server Error) error
-    //console.error("Error occurred while updating password:", error)
+    //// console.error("Error occurred while updating password:", error)
     return res.status(500).json({
       success: false,
       message: "Error occurred while updating password",
@@ -330,7 +330,7 @@ exports.checkUsernameAvailability = async (req, res) => {
       message: "Username is available",
     })
   } catch (error) {
-    //console.error(error)
+    //// console.error(error)
     return res.status(500).json({
       success: false,
       message: "Error occurred while checking username availability",
@@ -343,7 +343,7 @@ exports.getUserDetailsByUserId = async (req , res ) => {
   try {
  
     const {userName} = req.body ;
-    //console.log('userName' , userName ,'\n\n')
+    //// console.log('userName' , userName ,'\n\n')
     if(!userName){
       return res.status(400).json({
         success: false,
@@ -377,132 +377,9 @@ exports.getUserDetailsByUserId = async (req , res ) => {
       data: userDetails,
     });
   } catch (error) {
-    //console.log(error.message)
+    //// console.log(error.message)
   }
 }
 
 
 
-exports.addFriend = async (req , res) => {
-  try {
-   
-    const {friendId} = req.body ;
-    const userId = req.user.id;
-    if(!friendId){
-      return res.status(400).json({
-        success: false,
-        message: "Friend is required",
-      })
-    }
-
-    const friend = await User.findOne({_id:friendId})
-
-    if (!friend) {
-      return res.status(404).json({
-      success: false,
-      message: "No user found ",
-      });
-    }
-
-    // const user = await User.findById(userId) ;
-
-    if(friend.friendRequest.includes(userId)){
-      return res.status(404).json({
-        success: false,
-        message: "Request Already Sent ",
-        }); 
-    }
-
-   await friend.friendRequest.push(
-      userId 
-    )
-
-    await friend.save()
-
-    // const user = await User.findByIdAndUpdate(userId , {
-    //   frinedRequest:{
-    //     $push:friend._id
-    //   }
-    // })
-    // Return the user details
-    return res.status(200).json({
-      success: true,
-      message:'Request sent'
-    });
-  } catch (error) {
-    //console.log(error.message)
-  }
-}
-
-
-
-exports.acceptFriendRequest = async (req, res) => {
-  try {
-    const userId = req.user.id;
-    const { requesterId } = req.body;
-
-    const user = await User.findById(userId);
-    const requester = await User.findById(requesterId);
-
-    if (!user || !requester) {
-      return res.status(404).json({ success: false, message: "User not found" });
-    }
-
-    // Check if request exists
-    if (!user.friendRequest.includes(requesterId)) {
-      return res.status(400).json({ success: false, message: "No request found" });
-    }
-
-    // Remove from friendRequest
-    user.friendRequest = user.friendRequest.filter(
-      (id) => id.toString() !== requesterId
-    );
-
-    // Add to friends list for both users
-    user.friends.push(requesterId);
-    requester.friends.push(userId);
-
-    await user.save();
-    await requester.save();
-
-    return res.status(200).json({
-      success: true,
-      message: "Friend request accepted",
-    });
-  } catch (err) {
-    return res.status(500).json({ success: false, message: "Server error" });
-  }
-};
-
-
-exports.rejectFriendRequest = async (req, res) => {
-  try {
-    const userId = req.user.id;
-    const { requesterId } = req.body;
-
-    const user = await User.findById(userId);
-
-    if (!user) {
-      return res.status(404).json({ success: false, message: "User not found" });
-    }
-
-    // Check if request exists
-    if (!user.friendRequest.includes(requesterId)) {
-      return res.status(400).json({ success: false, message: "No request found" });
-    }
-
-    // Remove from friendRequest
-    user.friendRequest = user.friendRequest.filter(
-      (id) => id.toString() !== requesterId
-    );
-
-    await user.save();
-
-    return res.status(200).json({
-      success: true,
-      message: "Friend request rejected",
-    });
-  } catch (err) {
-    return res.status(500).json({ success: false, message: "Server error" });
-  }
-};
