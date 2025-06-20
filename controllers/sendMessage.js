@@ -1,6 +1,6 @@
 // 📁 controllers/messageController.js
-const Message = require("../models/message");
-const User = require("../models/user");
+const Message = require("../models/Message");
+const User = require("../models/User");
 const { sendMessageToSocketId } = require("../socket");
 
 // ✅ Send Message Controller
