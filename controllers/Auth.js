@@ -223,7 +223,7 @@ exports.sendotp = async (req, res) => {
 
    
    
-
+    //console.log(otpPayload)
     // Respond with success
     res.status(200).json({
       success: true,
