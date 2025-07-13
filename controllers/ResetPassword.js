@@ -2,7 +2,8 @@ const User = require("../models/User");
 const mailSender = require("../utils/mailSender");
 const bcrypt = require("bcryptjs");
 const crypto = require("crypto");
-
+const emailVerificationTemplate  = require('../mail/templates/resetPassword.js')
+require('dotenv').config();
 exports.resetPasswordToken = async (req, res) => {
 	try {
 		const email = req.body.email;
@@ -24,13 +25,14 @@ exports.resetPasswordToken = async (req, res) => {
 			{ new: true }
 		);
 		//// console.log("DETAILS", updatedDetails);
-
-		const url = `http://localhost:3000/update-password/${token}`;
-
+        
+		const url = `${process.env.FRONTEND_URI}/update-password/${token}`;
+        const html = emailVerificationTemplate(url)
 		await mailSender(
 			email,
-			"Password Reset",
-			`Your Link for email verification is ${url}. Please click this url to reset your password.`
+			"Reset Password Link !!"
+			,
+			html
 		);
 
 		res.json({
