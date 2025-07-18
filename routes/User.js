@@ -19,6 +19,10 @@ markMessagesAsSeen
 } = require('../controllers/sendMessage.js')
 
 const {
+  getSuggestions
+}  = require('../controllers/suggestions.js')
+
+const {
    addFriend ,
   rejectFriendRequest  ,
   acceptFriendRequest 
@@ -45,6 +49,9 @@ const { auth } = require("../middlewares/auth")
 router.post("/login", login)
 
 router.post('/support' , getReview) ;
+
+
+router.get("/suggestions", auth, getSuggestions);
 
 router.post('/sendMessage' , auth , sendMessage ) ; 
 router.put('/seenMessage' , auth , markMessagesAsSeen ) ; 

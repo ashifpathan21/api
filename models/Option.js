@@ -1,11 +1,7 @@
-const mongoose = require('mongoose') ;
+const mongoose = require("mongoose");
 
 const optionSchema = new mongoose.Schema({
-    options: {
-      type: String
-    },
-  });
-  
- 
+  options: { type: String, required: true },
+});
 
 module.exports = mongoose.model("Option", optionSchema);

@@ -1,19 +1,17 @@
 const mongoose = require("mongoose");
 
-// Question Schema
 const questionSchema = new mongoose.Schema({
   questionText: { type: String, required: true },
-  options: {
-    type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Option" }],
-    validate: {
-      validator: function (v) {
-        return v.length <= 4; // Ensure that options length does not exceed 4
-      },
-      message: "A question can have at most 4 options",
-    },
+  questionType: {
+    type: String,
+    enum: ["MCQ", "NUMERIC", "WRITTEN"],
+    required: true,
   },
-  correctOption: { type: mongoose.Schema.Types.ObjectId, ref: "Option" }, // Option reference
+  options: [{ type: mongoose.Schema.Types.ObjectId, ref: "Option" }], // MCQ
+  correctOption: { type: mongoose.Schema.Types.ObjectId, ref: "Option" }, // MCQ
+  correctAnswer: { type: String }, // NUMERIC or WRITTEN
+  aiFeedback: { type: String }, // WRITTEN
+  points: { type: Number, default: 1 },
 });
 
-module.exports = mongoose.model('Question', questionSchema);
-
+module.exports = mongoose.model("Question", questionSchema);

@@ -20,7 +20,8 @@ exports.signup = async (req, res) => {
       lastName,
       email,
       password,
-      userName  ,  
+      userName  , 
+      collegeName , 
       otp,
     } = req.body
     // Check if All Details are there or not
@@ -76,7 +77,7 @@ exports.signup = async (req, res) => {
       dateOfBirth: '',
       about: '',
       contactNumber: '',
-      collegeName: ''
+      collegeName: collegeName 
     })
     // .log("profile ",profileDetails)
     const user = await User.create({

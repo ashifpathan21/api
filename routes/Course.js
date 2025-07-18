@@ -23,15 +23,7 @@ const {
   deleteQuestion
 } = require('../controllers/Question')
 
-//options
-const {
-  addOption, 
-  updateOption ,
-  deleteOption ,
-  addCorrectOption ,
-  updateCorrectOption ,
-  deleteCorrectOption
-} = require('../controllers/Option')
+
 
 
 // Categories Controllers Import
@@ -66,6 +58,10 @@ const {
   updateCourseProgress
 } = require("../controllers/courseProgress");
 
+const {
+    submitSingleQuestion
+} = require('../controllers/submission.js')
+
 // Importing Middlewares
 const { auth, isInstructor, isStudent, isAdmin } = require("../middlewares/auth")
 
@@ -89,21 +85,15 @@ router.post("/deleteSubSection", auth, isInstructor, deleteSubSection)
 router.post("/addSubSection", auth, isInstructor, createSubSection)
 
 
-router.post('/subsection/addCorrectOption' , auth , isInstructor , addCorrectOption)
-router.post('/subsection/updateCorrectOption' , auth , isInstructor , updateCorrectOption)
-router.post('/subsection/deleteCorrectOption' , auth , isInstructor , deleteCorrectOption)
 
 //add question 
 router.post('/subsection/addQuestion' , auth , isInstructor , createQuestion);
 //update questuion
-router.post('/subsection/updateQuestion' , auth , isInstructor , updateQuestion) ;
+router.put('/subsection/updateQuestion' , auth , isInstructor , updateQuestion) ;
 //delete Question 
-router.post('/subsection/deleteQuestion' , auth  , isInstructor , deleteQuestion) ;
+router.delete('/subsection/deleteQuestion' , auth  , isInstructor , deleteQuestion) ;
 
-//add option 
-router.post('/subsection/addOption' , auth , isInstructor , addOption);
-router.post('/subsection/updateOption' , auth , isInstructor , updateOption);
-router.post('/subsection/deleteOption' , auth , isInstructor , deleteOption);
+
 
 
 // Get all Registered Courses
@@ -120,7 +110,12 @@ router.get("/getInstructorTopCourses", auth, isInstructor, getTopCourseOfInstruc
 // Delete a Course
 router.delete("/deleteCourse", deleteCourse)
 
+//to update progresss of user in course
 router.post("/updateCourseProgress", auth, isStudent, updateCourseProgress);
+//to submit questions 
+router.post('/submitQuestion' , auth , isStudent ,  submitSingleQuestion )
+
+
 
 // ********************************************************************************************************
 //                                      Category routes (Only by Admin)
