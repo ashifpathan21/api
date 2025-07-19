@@ -4,10 +4,12 @@ const aiService = require("./ai.service");
 module.exports = async function evaluateSingleAnswer(questionId, userAnswer) {
   const question = await Question.findById(questionId);
   if (!question) throw new Error("Question not found");
+   
 
    if (question.questionType === "MCQ") {
    const isCorrect =
-  question.correctOption.toString() === userAnswer?._id.toString();
+     question.correctOption?.toString() === userAnswer?._id?.toString() ||
+     question.correctOption?.toString() === userAnswer ;
 
     return {
       isCorrect,
@@ -53,7 +55,7 @@ Respond strictly in this JSON format (no markdown, no explanation):
     try {
       result = JSON.parse(jsonString);
     } catch (err) {
-      console.error("Failed to parse AI response:", jsonString);
+   //   console.error("Failed to parse AI response:", jsonString);
       throw new Error("AI response was not valid JSON");
     }
 

@@ -7,6 +7,7 @@ const paymentRoutes = require("./routes/Payments");
 const Location = require("./routes/Location");
 const courseRoutes = require("./routes/Course");
 const contactUsRoute = require("./routes/Contact");
+const GenerateQuiz = require('./routes/GenerateQuiz.js')
 const testRoutes = require("./routes/testRoutes.js");
 const Leaderboard = require("./routes/LeaderBoard.js");
 const database = require("./config/database");
@@ -48,6 +49,7 @@ app.use("/api/v1/payment", paymentRoutes);
 app.use("/api/v1/reach", contactUsRoute);
 app.use("/api/v1/location", Location);
 app.use("/api/v1/getRank", Leaderboard);
+app.use("/api/v1/quiz", GenerateQuiz);
 
 //def route
 

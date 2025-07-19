@@ -11,11 +11,11 @@ exports.getLeaderboard = async (req, res) => {
       select: "collegeName",
     });
 
-    if (!user || !user.additionalDetails || !user.additionalDetails.collegeName) {
-      return res.status(404).json({ success: false, message: "User or college not found" });
+    if (!user ) {
+      return res.status(404).json({ success: false, message: "User" });
     }
 
-    const userCollege = user.additionalDetails.collegeName;
+    const userCollege = user?.additionalDetails?.collegeName;
 
     // Step 2: Global leaderboard (students only)
     const globalLeaderboard = await User.find({ accountType: "Student" })
@@ -25,7 +25,8 @@ exports.getLeaderboard = async (req, res) => {
         path: "additionalDetails",
         select: "collegeName linkedinUrl",
       });
-
+     
+      
     // Step 3: College leaderboard (students only, same college)
     const collegeProfileIds = await Profile.find({
       collegeName: userCollege,
@@ -50,7 +51,7 @@ exports.getLeaderboard = async (req, res) => {
       collegeLeaderboard,
     });
   } catch (error) {
-    console.error("Leaderboard error:", error);
+  //  console.error("Leaderboard error:", error);
     res.status(500).json({ success: false, message: "Internal Server Error" });
   }
 };

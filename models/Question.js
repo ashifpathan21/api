@@ -12,6 +12,11 @@ const questionSchema = new mongoose.Schema({
   correctAnswer: { type: String }, // NUMERIC or WRITTEN
   aiFeedback: { type: String }, // WRITTEN
   points: { type: Number, default: 1 },
+  source: {
+    type: String,
+    enum: ["COURSE", "AI_QUIZ"],
+    default: "COURSE",
+  },
 });
 
 module.exports = mongoose.model("Question", questionSchema);

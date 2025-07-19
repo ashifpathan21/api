@@ -48,7 +48,7 @@ exports.updateCourseProgress = async (req, res) => {
       completed: courseProgress.completedVideos.length,
     });
   } catch (error) {
-    console.error("Update Course Progress Error:", error);
+  //  console.error("Update Course Progress Error:", error);
     return res.status(500).json({ error: "Internal server error" });
   }
 };
@@ -93,7 +93,7 @@ exports.getProgressPercentage = async (req, res) => {
       total: totalSubsections,
     });
   } catch (error) {
-    console.error("Progress Fetch Error:", error.message);
+    //console.error("Progress Fetch Error:", error.message);
     res.status(500).json({ error: "Internal server error" });
   }
 };

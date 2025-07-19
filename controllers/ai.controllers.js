@@ -62,7 +62,7 @@ Respond strictly in JSON:
     res.status(400).json({ message: "Only NUMERIC and WRITTEN types supported" });
 
   } catch (error) {
-    console.error(error.message);
+   // console.error(error.message);
     res.status(500).json({ message: error.message });
   }
 };

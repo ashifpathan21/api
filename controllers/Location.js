@@ -17,7 +17,7 @@ exports.getLocation = async (req, res) => {
 
     return res.json({ success: true, data});
   } catch (err) {
-    console.error("ERR", err.response?.status || err.message);
+  //  console.error("ERR", err.response?.status || err.message);
     return res.status(500).json({ success: false, message: "Failed to fetch colleges", error: err.message });
   }
 };

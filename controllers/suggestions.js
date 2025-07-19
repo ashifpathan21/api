@@ -54,7 +54,7 @@ exports.getSuggestions = async (req, res) => {
       courseSuggestions,
     });
   } catch (error) {
-    console.error("Suggestion Fetch Error:", error.message);
+   // console.error("Suggestion Fetch Error:", error.message);
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
