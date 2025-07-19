@@ -35,10 +35,10 @@ exports.capturePayment = async (req, res) => {
 
       // Check if the user is already enrolled in the course
       const uid = new mongoose.Types.ObjectId(userId)
-      if (course.studentsEnroled.includes(uid)) {
+      if (course.studentsEnrolled?.includes(uid)) {
         return res
           .status(200)
-          .json({ success: false, message: "Student is already Enrolled" })
+          .json({ success: false, message: "Student is already Enrolled" });
       }
 
       // Add the price of the course to the total amount
@@ -58,14 +58,14 @@ exports.capturePayment = async (req, res) => {
   try {
     // Initiate the payment using Razorpay
     const paymentResponse = await instance.orders.create(options)
-    //// console.log(paymentResponse)
-    res.json({
+    // console.log(paymentResponse)
+   return res.json({
       success: true,
       data: paymentResponse,
     })
   } catch (error) {
     //// console.log(error)
-    res
+    return res
       .status(500)
       .json({ success: false, message: "Could not initiate order." })
   }
@@ -130,6 +130,11 @@ exports.sendPaymentSuccessEmail = async (req, res) => {
         paymentId
       )
     )
+
+    return res.status(200).json({
+      success:true ,
+      message:"Sent "
+    })
   } catch (error) {
     //// console.log("error in sending mail", error)
     return res

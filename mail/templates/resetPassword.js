@@ -73,7 +73,7 @@ const resetPasswordTemplate = (resetLink) => {
 			<div class="message">Reset Your Password</div>
 			<div class="body">
 				<p>Dear User,</p>
-				<p>We received a request to reset the password for your Ace of Spades account. To reset your password, please click the button below:</p>
+				<p>We received a request to reset the password for your AOS-Shiksha account. To reset your password, please click the button below:</p>
 				<a class="cta" href="${resetLink}">Reset Password</a>
 				<p>If the button above does not work, copy and paste the following link into your browser:</p>
 				<p><a href="${resetLink}">${resetLink}</a></p>

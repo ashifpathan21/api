@@ -295,15 +295,17 @@ exports.instructorDashboard = async (req, res) => {
 exports.enrollInCourse = async (req, res) => {
   try {
     const userId = req.user.id;
-    const { courseId } = req.body;
+    const { courseId  , price} = req.body;
 
-    if (!courseId || !userId) {
+    if (!courseId || !userId ) {
       return res
         .status(400)
         .json({ success: false, message: "Please Provide Course ID and User ID" })
     }
 
-  
+     if(price !== 0  ){
+        return res.status(500).json({ success: false, message: "Course is not free" })
+     }
 
     // Check if the course exists
     const course = await Course.findById(courseId);
